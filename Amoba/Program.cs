@@ -1,57 +1,58 @@
-﻿namespace Amoba
+﻿using System.Net;
+
+namespace Gomoku
 {
     internal class Program
     {
         static void Main(string[] args)
-        {          
-            var field = Field(SizeField(10));
+        {           
+            var field = Board(SizeBoard(10));
 
-            //Random rnd = new Random();
-            //RandomWall(field, 20, rnd);
-            //PrintField(Player(field, 3, 6));
-
-            //char currentPlayer = 'X';
             bool gameOver = false;
 
+            #region Game
             while (!gameOver)
             {
                 Console.Clear();
                 
-                Console.WriteLine("\nAmöba\n");
+                string[] title = { "   \u2554\u2550\u2550 G O M O K U \u2550\u2550\u2557" };
+                foreach (var t in title)
+                {
+                    Console.WriteLine(t);
+                }
 
-                PrintField(field);
+                PrintBoard(field);
                 
-                var player = GetPlayer(ReadInt("\n1: X, 2: O - ", 1, 2));
+                var player = GetPlayer(ReadInt("\nChoose mark:\n1: X, 2: O - ", 1, 2));
 
-                
-                Console.WriteLine($"\nA(z) {player} játékos következik!");
+                MakeMove(player);                
 
-                // Az "X" kezd. Nyerésig felváltva írnak a pályára
-                MakeMove(player);
-                
+                if (CheckWin(field, player))
+                {
+                    if (player == 1)
+                    {
+                        Console.WriteLine("Winner: X");
+                    }
 
-                
-
-
-
-
-
+                    else
+                    {
+                        Console.WriteLine("Winner: O");
+                    }
+                }                
             }
-
-
-
-
-
+            #endregion
 
 
             #region Methods
-            int[,] SizeField(int size)
+            // Board size
+            int[,] SizeBoard(int size)
             {
                 return new int[size, size];
             }
 
-            int[,] Field(int[,] field)
-            {
+            // Make the board
+            int[,] Board(int[,] field)
+            {                
                 for (int y = 0; y < field.GetLength(0); y++)
                 {
                     for (int x = 0; x < field.GetLength(1); x++)
@@ -63,7 +64,8 @@
                 return field;
             }
 
-            int[,] PrintField(int[,] field)
+            // Print the board
+            int[,] PrintBoard(int[,] field)
             {
                 Console.WriteLine();
                 Console.WriteLine("    0 1 2 3 4 5 6 7 8 9");
@@ -101,39 +103,12 @@
                 return field;
             }
 
-            //int[,] RandomWall(int[,] field, int chance, Random rnd)
-            //{
-            //    for (int i = 0; i < field.GetLength(0); i++)
-            //    {
-            //        for (int j = 0; j < field.GetLength(1); j++)
-            //        {
-            //            field[i, j] = rnd.Next(100) < chance ? 1 : 0;                        
-            //        }
-            //    }
-
-            //    return field;
-            //}
-
-            //int[,] Player(int[,] field, int startX, int startY)
-            //{
-            //    if (field[startX, startY] == 1)
-            //    {
-            //        Console.WriteLine("A választott kezdőpozíció a falra esik!");
-            //    }
-
-            //    else
-            //    {
-            //        field[startX, startY] = 2;
-            //    }
-
-            //    return field;
-            //}
-
-            int ReadInt(string text, int min, int max)
+            // Input for players
+            int ReadInt(string prompt, int min, int max)
             {
                 while (true)
                 {
-                    Console.Write(text);
+                    Console.Write(prompt);
                     string line = Console.ReadLine();
 
                     if (int.TryParse(line, out int number) && number >= min && number <= max)
@@ -141,29 +116,31 @@
                         return number;
                     }
 
-                    Console.WriteLine($"Hibás bevitel! Adj meg számot {min} és {max} között.");
+                    Console.WriteLine($"Invalid input! Enter a number between {min} and {max}.");
                 }
             }
 
+            // Players
             int GetPlayer(int player)
             {
                 if (player == 1)
                 {
-                    Console.WriteLine("Játékos: X");
+                    Console.WriteLine("Player: X");
                 }
 
                 else
                 {
-                    Console.WriteLine("Játékos: O");
+                    Console.WriteLine("Player: O");
                 }
 
                 return player;
             }
 
+            // Player's move
             void MakeMove(int player)
             {
-                int x = ReadInt("Add meg a oszlop számát 0-9 között: ", 0, 9);
-                int y = ReadInt("Add meg az sor számát 0-9 között: ", 0, 9);
+                int x = ReadInt("Enter the column number between 0 and 9: ", 0, 9);
+                int y = ReadInt("Enter the row number between 0 and 9: ", 0, 9);
 
                 if (field[y, x] == 0)
                 {
@@ -172,14 +149,65 @@
 
                 else
                 {
-                    Console.WriteLine("A mező nem üres!");
+                    Console.WriteLine("The field is not empty!");
                 }
             }
 
+            // Check board state and count the number of 'X' and 'O'
+            bool CheckWin(int[,] field, int player)
+            {
+                gameOver = true;
 
+                int countX = 1;
+                int countO = 1;
 
+                //Console.WriteLine("\nInspect:");
 
-            #endregion
+                for (int y = 0; y < field.GetLength(0) - 1; y++)
+                {                   
+                    for (int x = 0; x < field.GetLength(1) - 1; x++)
+                    {
+                        // Check for winning lines horizontally, vertically, and diagonally
+                        if (field[y, x] == player && field[y, x + 1] == player || field[y, x] == player && field[y + 1, x] == player || field[y, x] == player && field[y + 1, x + 1] == player) 
+                        {
+                            if (player == 1)
+                            {
+                                countX++;
+                            }
+
+                            else if (player == 2)
+                            {
+                                countO++;
+                            }
+
+                            else
+                            {
+                                countX = 1;
+                                countO = 1;
+                            }
+                        }
+
+                        //Console.Write(field[y, x] + " ");   // for inspect
+                    }
+                }
+                //Console.WriteLine($"\nX: {countX}");    // for inspect
+                //Console.WriteLine($"O: {countO}");  // for inspect
+
+                if (countX == 5)
+                {
+                    return gameOver;
+                }
+
+                else if (countO == 5)
+                {
+                    return gameOver;
+                }
+
+                    return false;
+            }
         }
+
+
+        #endregion    
     }
 }
