@@ -14,7 +14,7 @@ namespace Gomoku
             #region Game
             while (!gameOver)
             {
-                //Console.Clear();
+                Console.Clear();
                 
                 string[] title = { "   \u2554\u2550\u2550 G O M O K U \u2550\u2550\u2557" };
 
@@ -29,14 +29,14 @@ namespace Gomoku
 
                 var (y, x) = MakeMove(player);
                 
-                //Console.Clear();
-                //PrintBoard(field);
+                Console.Clear();
+                PrintBoard(field);
 
-                if (CheckWinHorizontally(field, player, y, x) || CheckWinVertically(field, player, y, x) || CheckWinMainDiagonally(field, player, y, x) || CheckWinAntiDiagonal(field, player, y, x))
+                if (CheckWinHorizontally(field, player, y, x) || CheckWinVertically(field, player, y, x) || CheckWinMainDiagonally(field, player, y, x) || CheckWinAntiDiagonally(field, player, y, x))
                 {
                     Console.WriteLine($"Winner: {(player == 1 ? "X" : "O")}");
                     break;
-                }                
+                }
             }
 
 
@@ -140,20 +140,22 @@ namespace Gomoku
             // Player's move
             (int lastY, int lastX) MakeMove(int player)
             {
-                int lastX = ReadInt("Enter the column number between 0 and 9: ", 0, 9);
-                int lastY = ReadInt("Enter the row number between 0 and 9: ", 0, 9);
-
-                if (field[lastY, lastX] == 0)
+                try
                 {
-                    field[lastY, lastX] = player;
-                }
+                    int lastX = ReadInt("Enter the column number between 0 and 9: ", 0, 9);
+                    int lastY = ReadInt("Enter the row number between 0 and 9: ", 0, 9);
 
-                else
+                    if (field[lastY, lastX] == 0)
+                    {
+                        field[lastY, lastX] = player;
+                    }
+
+                    return (lastY, lastX);
+                }
+                catch (Exception ex)
                 {
-                    Console.WriteLine("The field is not empty!");
-                }
-
-                return (lastY, lastX);
+                    throw new Exception("The field is not empty!", ex);
+                }                    
             }
 
             // Check for horizontal winning lines from the last player's position
@@ -292,7 +294,7 @@ namespace Gomoku
             }
 
             // Check for right diagonal (right, top - left, bottom) winning lines from the last player's position
-            bool CheckWinAntiDiagonal(int[,] field, int player, int y, int x)
+            bool CheckWinAntiDiagonally(int[,] field, int player, int y, int x)
             {
                 int countTop = 0;
                 int countBottom = 0;
