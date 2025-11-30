@@ -1,21 +1,23 @@
-﻿using System.Net;
+﻿using System.Collections.Specialized;
+using System.Net;
 
 namespace Gomoku
 {
     internal class Program
     {
         static void Main(string[] args)
-        {           
-            var field = Board(SizeBoard(10));
+        {
+            var field = Board(BoardSize(10));
 
             bool gameOver = false;
 
             #region Game
             while (!gameOver)
             {
-                Console.Clear();
+                //Console.Clear();
                 
                 string[] title = { "   \u2554\u2550\u2550 G O M O K U \u2550\u2550\u2557" };
+
                 foreach (var t in title)
                 {
                     Console.WriteLine(t);
@@ -25,27 +27,26 @@ namespace Gomoku
                 
                 var player = GetPlayer(ReadInt("\nChoose mark:\n1: X, 2: O - ", 1, 2));
 
-                MakeMove(player);                
+                var (y, x) = MakeMove(player);
+                
+                //Console.Clear();
+                //PrintBoard(field);
 
-                if (CheckWin(field, player))
+                if (CheckWinHorizontally(field, player, y, x) || CheckWinVertically(field, player, y, x) || CheckWinMainDiagonally(field, player, y, x) || CheckWinAntiDiagonal(field, player, y, x))
                 {
-                    if (player == 1)
-                    {
-                        Console.WriteLine("Winner: X");
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("Winner: O");
-                    }
+                    Console.WriteLine($"Winner: {(player == 1 ? "X" : "O")}");
+                    break;
                 }                
             }
+
+
             #endregion
+
 
 
             #region Methods
             // Board size
-            int[,] SizeBoard(int size)
+            int[,] BoardSize(int size)
             {
                 return new int[size, size];
             }
@@ -137,74 +138,209 @@ namespace Gomoku
             }
 
             // Player's move
-            void MakeMove(int player)
+            (int lastY, int lastX) MakeMove(int player)
             {
-                int x = ReadInt("Enter the column number between 0 and 9: ", 0, 9);
-                int y = ReadInt("Enter the row number between 0 and 9: ", 0, 9);
+                int lastX = ReadInt("Enter the column number between 0 and 9: ", 0, 9);
+                int lastY = ReadInt("Enter the row number between 0 and 9: ", 0, 9);
 
-                if (field[y, x] == 0)
+                if (field[lastY, lastX] == 0)
                 {
-                    field[y, x] = player;
+                    field[lastY, lastX] = player;
                 }
 
                 else
                 {
                     Console.WriteLine("The field is not empty!");
                 }
+
+                return (lastY, lastX);
             }
 
-            // Check board state and count the number of 'X' and 'O'
-            bool CheckWin(int[,] field, int player)
-            {
-                gameOver = true;
-
-                int countX = 1;
-                int countO = 1;
-
-                //Console.WriteLine("\nInspect:");
-
-                for (int y = 0; y < field.GetLength(0) - 1; y++)
-                {                   
-                    for (int x = 0; x < field.GetLength(1) - 1; x++)
+            // Check for horizontal winning lines from the last player's position
+            bool CheckWinHorizontally(int[,] field, int player, int y, int x)
+            {                
+                int countLeft = 0;
+                int countRight = 0;
+                
+                for (int i = x + 1; i < field.GetLength(1); i++)    // check continous marks to the right of the starting position
+                {
+                    if (field[y, i] == player)
                     {
-                        // Check for winning lines horizontally, vertically, and diagonally
-                        if (field[y, x] == player && field[y, x + 1] == player || field[y, x] == player && field[y + 1, x] == player || field[y, x] == player && field[y + 1, x + 1] == player) 
-                        {
-                            if (player == 1)
-                            {
-                                countX++;
-                            }
+                        countRight++;
+                    }
 
-                            else if (player == 2)
-                            {
-                                countO++;
-                            }
-
-                            else
-                            {
-                                countX = 1;
-                                countO = 1;
-                            }
-                        }
-
-                        //Console.Write(field[y, x] + " ");   // for inspect
+                    else
+                    {
+                        break;  // if not player, stop the count
                     }
                 }
-                //Console.WriteLine($"\nX: {countX}");    // for inspect
-                //Console.WriteLine($"O: {countO}");  // for inspect
 
-                if (countX == 5)
+                for (int i = x - 1; i >= 0; i--)    // check continous marks to the left of the starting position
                 {
-                    return gameOver;
+                    if (field[y, i] == player)
+                    {
+                        countLeft++;
+                    }
+
+                    else
+                    {
+                        break;  // if not player, stop the count
+                    }
                 }
 
-                else if (countO == 5)
+                int sum = countLeft + 1 + countRight;   // total continous marks inclulding the starting one
+
+                if (sum == 5)
                 {
-                    return gameOver;
+                    gameOver = true;
+                    return true;
                 }
 
-                    return false;
+                return false;
             }
+
+            // Check for vertical winning lines from the last player's position
+            bool CheckWinVertically(int[,] field, int player, int y, int x)
+            {
+                int countBottom = 0;
+                int countTop = 0;
+                
+                for (int i = y + 1; i < field.GetLength(0); i++)    // check continous marks to the bottom of the starting position
+                {
+                    if (field[i, x] == player)
+                    {
+                        countBottom++;
+                    }
+
+                    else
+                    {
+                        break;  // if not player, stop the count
+                    }
+                }
+
+                for (int i = y - 1; i >= 0; i--)    // check continous marks to the top of the starting position
+                {
+                    if (field[i, x] == player)
+                    {
+                        countTop++;
+                    }
+
+                    else
+                    {
+                        break;  // if not player, stop the count
+                    }
+                }
+
+                int sum = countBottom + 1 + countTop;   // Total continous marks inclulding the starting one
+
+                if (sum == 5)
+                {
+                    gameOver = true;
+                    return true;
+                }
+
+                return false;
+            }
+
+            // Check for main diagonal (right, bottom - left, top) winning lines from the last player's position
+            bool CheckWinMainDiagonally(int[,] field, int player, int y, int x)
+            {
+                int countPrev = 0;
+                int countNext = 0;
+
+                int nextX = x + 1;
+                int nextY = y + 1;
+
+                int prevX = x - 1;
+                int prevY = y - 1;
+
+                for (; nextX < field.GetLength(1) && nextY < field.GetLength(0); nextX++, nextY++)  // check continous marks to the right, bottom of the starting position
+                {
+                    if (field[nextY, nextX] == player)
+                    {
+                        countNext++;
+                    }
+
+                    else
+                    {
+                        break;  // if not player, stop the count
+                    }                    
+                }
+
+                for (; prevX >= 0 && prevY >= 0; prevX--, prevY--)  // check continous marks to the left, top of the starting position
+                {
+                    if (field[prevY, prevX] == player)
+                    {
+                        countPrev++;
+                    }
+
+                    else
+                    {
+                        break;  // if not player, stop the count
+                    }
+                }
+
+                int sum = countPrev + 1 + countNext;    // Total continous marks inclulding the starting one
+
+                if (sum == 5)
+                {
+                    gameOver = true;
+                    return true;
+                }
+
+                return false;
+            }
+
+            // Check for right diagonal (right, top - left, bottom) winning lines from the last player's position
+            bool CheckWinAntiDiagonal(int[,] field, int player, int y, int x)
+            {
+                int countTop = 0;
+                int countBottom = 0;
+
+                int nextTopX = x + 1;
+                int nextTopY = y - 1;
+
+                int nextBottomX = x - 1;
+                int nextBottomY = y + 1;
+
+                for (; nextTopX < field.GetLength(1) && nextTopY >= 0; nextTopX++, nextTopY--)    // check continous marks to the right, top of the starting position
+                {
+                    if (field[nextTopY, nextTopX] == player)
+                    {
+                        countTop++;
+                    }
+
+                    else
+                    {
+                        break;  // if not player, stop the count
+                    }
+                }                
+
+                for (; nextBottomX >= 0 && nextBottomY < field.GetLength(0); nextBottomX--, nextBottomY++)    // check continous marks to the left, bottom of the starting position
+                {
+                    if (field[nextBottomY, nextBottomX] == player)
+                    {
+                        countBottom++;
+                    }
+
+                    else
+                    {
+                        break;  // if not player, stop the count
+                    }
+                }
+
+                int sum = countTop + 1 + countBottom;   // Total continous marks inclulding the starting one
+
+                if (sum == 5)
+                {
+                    gameOver = true;
+                    return true;
+                }
+
+                return false;
+            }
+
+
         }
 
 
