@@ -6,29 +6,25 @@ This is my first independent game project, implementing the classic Gomoku (Five
 
 ## Key Features
 
-- Console-based gameplay with colored output
+Console-based gameplay with colored output
 
-- Simple player interaction: players take turns selecting a row and column
+Simple player interaction (row/column input)
 
-- Current version: beta. The main focus is implementing correct win detection
+Solid win-detection logic for all directions
 
-## Known Issues
-
-- Win checking is under development. Some edge cases may not be handled correctly
-
-- Currently, the game loop does not always stop automatically after a win
-
-- If a player chooses an occupied cell, the game does not yet prompt for a retry
+Current version: beta — core mechanics are functional and improving
 
 ## Planned Improvements
 
-- Complete and bug-free win detection in all directions
+- Separate rendering logic from game logic
 
-- Improved gameplay flow: automatic end-of-game and retries for occupied cells
+- Refactor player handling
 
-- Customizable board size and win conditions
+- Improve graphics layer (decouple UI)
 
-- Graphical enhancements and scoring/statistics
+- Add restart option after game over
+
+- Optional: AI player (easy mode)
 
 ## How to Play
 1. Clone the repository:
