@@ -1,36 +1,32 @@
-#Gomoku
+# Gomoku
 
 **A simple console-based Gomoku game in C#.**
 
 This is my first independent game project, implementing the classic Gomoku (Five in a Row) game. The goal is to place five identical marks (X or O) in a row on a 10x10 board—horizontally, vertically, or diagonally.
 
-##Key Features
+## Key Features
 
-- Console-based gameplay with colored output
+Console-based gameplay with colored output
 
-- Simple player interaction: players take turns selecting a row and column
+Simple player interaction (row/column input)
 
-- Current version: beta. The main focus is implementing correct win detection
+Solid win-detection logic for all directions
 
-##Known Issues
+Current version: beta — core mechanics are functional and improving
 
-- Win checking is under development. Some edge cases may not be handled correctly
+## Planned Improvements
 
-- Currently, the game loop does not always stop automatically after a win
+- Separate rendering logic from game logic
 
-- If a player chooses an occupied cell, the game does not yet prompt for a retry
+- Refactor player handling
 
-##Planned Improvements
+- Improve graphics layer (decouple UI)
 
-- Complete and bug-free win detection in all directions
+- Add restart option after game over
 
-- Improved gameplay flow: automatic end-of-game and retries for occupied cells
+- Optional: AI player (easy mode)
 
-- Customizable board size and win conditions
-
-- Graphical enhancements and scoring/statistics
-
-##How to Play
+## How to Play
 1. Clone the repository:
 ```bash
 git clone <repository-url>
