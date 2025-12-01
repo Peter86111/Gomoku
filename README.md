@@ -16,7 +16,7 @@ Current version: beta — core mechanics are functional and improving
 
 ## Planned Improvements
 
-- Separate rendering logic from game logic
+- Modular architecture / Class-based structure
 
 - Refactor player handling
 
