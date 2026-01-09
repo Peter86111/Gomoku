@@ -1,32 +1,57 @@
-# Gomoku
+# Gomoku (Five in a Row) – Console Application
 
-**A simple console-based Gomoku game in C#.**
+This project is a console-based implementation of the classic Gomoku (Five in a Row) game, written in C#.
 
-This is my first independent game project, implementing the classic Gomoku (Five in a Row) game. The goal is to place five identical marks (X or O) in a row on a 10x10 board—horizontally, vertically, or diagonally.
+The main goal of this project is learning and practicing:
+- Object-Oriented Programming principles
+- Console rendering
+- Game logic separation
+- Clean and readable code structure
 
-## Key Features
+---
 
-Console-based gameplay with colored output
+## Features
 
-Simple player interaction (row/column input)
+- Two-player local gameplay
+- Unicode-based board rendering
+- Centered ASCII title screen
+- Win condition checks (horizontal, vertical, diagonal)
+- Clear separation of responsibilities (Game, Board, Render, Input)
 
-Solid win-detection logic for all directions
+---
 
-Current version: beta — core mechanics are functional and improving
+## Current State
 
-## Planned Improvements
+🚧 **This project is under active development.**
 
-- Separate rendering logic from game logic
+Planned improvements:
+- Menu system
+- Improved text and input alignment
+- Letter-based X-axis (A–O instead of numbers)
+- Code refactoring and documentation expansion
+- Possible AI opponent (future goal)
 
-- Refactor player handling
+---
 
-- Improve graphics layer (decouple UI)
+## Why this project?
 
-- Add restart option after game over
+This repository also serves as a **learning reference** and a **portfolio project**.
+Some parts may be improved later as my knowledge grows.
 
-- Optional: AI player (easy mode)
+---
 
-## How to Play
-1. Clone the repository:
-```bash
-git clone <repository-url>
+## Learning & Acknowledgements
+
+This project was developed as part of a self-learning journey in C# and software development.
+
+During development, I received guidance and conceptual explanations from ChatGPT (OpenAI),
+which helped me better understand design decisions, code structure, and best practices.
+
+All code was written, tested, and integrated by me as part of the learning process.
+The goal of this project is to reflect my current understanding and continuous improvement.
+
+## How to Run
+
+- Clone the repository
+- Open in Visual Studio
+- Build and run the console application
