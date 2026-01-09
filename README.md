@@ -40,6 +40,16 @@ Some parts may be improved later as my knowledge grows.
 
 ---
 
+## Learning & Acknowledgements
+
+This project was developed as part of a self-learning journey in C# and software development.
+
+During development, I received guidance and conceptual explanations from ChatGPT (OpenAI),
+which helped me better understand design decisions, code structure, and best practices.
+
+All code was written, tested, and integrated by me as part of the learning process.
+The goal of this project is to reflect my current understanding and continuous improvement.
+
 ## How to Play
 
 1. Clone the repository:
