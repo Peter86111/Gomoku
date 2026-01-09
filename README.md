@@ -50,10 +50,8 @@ which helped me better understand design decisions, code structure, and best pra
 All code was written, tested, and integrated by me as part of the learning process.
 The goal of this project is to reflect my current understanding and continuous improvement.
 
-## How to Play
+## How to Run
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-
----
+- Clone the repository
+- Open in Visual Studio
+- Build and run the console application
