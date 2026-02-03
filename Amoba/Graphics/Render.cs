@@ -1,4 +1,5 @@
 ﻿using Gomoku.Core;
+using Gomoku.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Gomoku.Graphics
 {
-    internal class Render
+    internal class Render: IRender
     {
         #region Methods
         public void Board(CellState[,] cellStates)
@@ -47,7 +48,7 @@ namespace Gomoku.Graphics
 
                 // Print Y-axis with horizontal padding
                 foreach (string line in axisY.Split('\n'))
-                {                    
+                {
                     Console.Write(new string(' ', paddingY) + line);
                     Console.BackgroundColor = ConsoleColor.DarkYellow;
                 }
@@ -78,9 +79,9 @@ namespace Gomoku.Graphics
                     }
                 }
 
-                // Reset colors and close the row with a right border
+                // Reset colors and close the row with a right border (│)
                 Console.ResetColor();
-                Console.Write("\u2502");    // │
+                Console.Write("\u2502");
                 Console.WriteLine();
             }
 
@@ -93,28 +94,28 @@ namespace Gomoku.Graphics
             int consoleWidth = Console.WindowWidth;
 
             // Fixed width of the ASCII logo
-            int logoWidth = 67;
+            int logoWidth = 85;
 
             // Calculate padding to center the logo
             int padding = (consoleWidth - logoWidth) / 2;
 
             // ASCII art title for the game
             string gomokuLogo = @"
- ██████╗  ██████╗ ███╗   ███╗ ██████╗ ██╗  ██╗ ██╗   ██╗
-██╔════╝ ██╔═══██╗████╗ ████║██╔═══██╗██║ ██╔╝ ██║   ██║
-██║  ███╗██║   ██║██╔████╔██║██║   ██║█████╔╝  ██║   ██║
-██║   ██║██║   ██║██║╚██╔╝██║██║   ██║██╔═██╗  ██║   ██║
-╚██████╔╝╚██████╔╝██║ ╚═╝ ██║╚██████╔╝██║  ██╗ ╚██████╔╝
- ╚═════╝  ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝  ╚═════╝ 
+                 ██████╗  ██████╗ ███╗   ███╗ ██████╗ ██╗  ██╗ ██╗   ██╗
+                ██╔════╝ ██╔═══██╗████╗ ████║██╔═══██╗██║ ██╔╝ ██║   ██║
+                ██║  ███╗██║   ██║██╔████╔██║██║   ██║█████╔╝  ██║   ██║
+                ██║   ██║██║   ██║██║╚██╔╝██║██║   ██║██╔═██╗  ██║   ██║
+                ╚██████╔╝╚██████╔╝██║ ╚═╝ ██║╚██████╔╝██║  ██╗ ╚██████╔╝
+                 ╚═════╝  ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝  ╚═════╝ 
 
-========================================================
+                ========================================================
 
-       G O M O K U   –   F I V E   I N   A   R O W
+                       G O M O K U   –   F I V E   I N   A   R O W
 
-========================================================
+                ========================================================
 
-          Black starts. Think ahead. Win smart.
-";
+                          Black starts. Think ahead. Win smart.
+                ";
 
             // Clear console before rendering the title
             Console.Clear();
@@ -133,7 +134,7 @@ namespace Gomoku.Graphics
 
             // Wait for user input before continuing
             Console.ReadKey();
-        }       
+        }
         #endregion
     }
 }

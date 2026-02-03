@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gomoku.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Gomoku.Core
 {
-    internal class WinCondition
+    internal class WinCondition: IWinCodition
     {
         #region Methods        
         // Check for horizontal winning lines from the last player's position

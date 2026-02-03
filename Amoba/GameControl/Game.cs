@@ -1,6 +1,7 @@
 ﻿using Gomoku.Core;
 using Gomoku.Graphics;
 using Gomoku.Input;
+using Gomoku.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,28 @@ namespace Gomoku.GameControl
 {
     internal class Game
     {
-        Board board = new Board();
-        Render render = new Render();
-        WinCondition winCondition = new WinCondition();
-        bool isGameOver = false;
+        #region Field
+        private readonly IBoard _board;
+        private readonly IRender _render;
+        private readonly IWinCodition _winCondition;        
+        #endregion
 
+        #region Constructor
+        public Game(IBoard board, IRender render, IWinCodition winCodition)
+        {
+            _board = board;
+            _render = render;
+            _winCondition = winCodition;
+        }
+        #endregion       
+
+        #region Methods
         public void Run()
         {
+            bool isGameOver = false;
+
             // Display the game title and wait for user interaction
-            render.GetTitle();
+            _render.GetTitle();
 
             // --- Player setup phase ---
 
@@ -30,16 +44,12 @@ namespace Gomoku.GameControl
 
             // Ask for the second player's name and stone color
             var player2Name = GetPlayerName("\nSecond player name: ");
-            var player2Stone = GetStone($"\n{player1Stone} stone is used by {player1Name}!\nChoose the free stone: ");
+            var player2Stone = GetStone($"\nChoose the free stone: ");
 
             // Ensure that both players do not choose the same stone color
             while (!CheckStoneColor(player1Stone, player2Stone))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\n{player1Stone} stone already taken. Please choose the other one.!\n");
-                Console.ResetColor();
-
-                player2Stone = GetStone($"{player2Name}!\nChoose the free stone: ");                
+                player2Stone = GetStone($"\nChoose the free stone: ");
             }
 
             // Create player objects from the validated input
@@ -51,8 +61,8 @@ namespace Gomoku.GameControl
 
             // Prepare the initial game board
             Console.Clear();
-            board.GetBoardState();
-            render.Board(board.Field);
+            var status = _board.GetBoardState();
+            _render.Board(status);
 
             // Main game loop
             while (isGameOver != true)
@@ -67,7 +77,7 @@ namespace Gomoku.GameControl
                 var moveY = input.ReadInt("Y (0–14): ");
 
                 // Validate that the selected position is empty
-                while (!board.IsValidMove(moveX, moveY))
+                while (!_board.IsValidMove(moveX, moveY))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nThis field is occupied. Try again.\n");
@@ -84,7 +94,7 @@ namespace Gomoku.GameControl
                 MakeMove(currentPlayer, position);
 
                 // Check all possible win conditions from the last move
-                bool win = winCondition.CheckWinHorizontally(board.Field, moveX, moveY) || winCondition.CheckWinVertically(board.Field, moveX, moveY) || winCondition.CheckWinMainDiagonally(board.Field, moveX, moveY) || winCondition.CheckWinAntiDiagonally(board.Field, moveX, moveY);
+                bool win = _winCondition.CheckWinHorizontally(status, moveX, moveY) || _winCondition.CheckWinVertically(status, moveX, moveY) || _winCondition.CheckWinMainDiagonally(status, moveX, moveY) || _winCondition.CheckWinAntiDiagonally(status, moveX, moveY);
 
                 if (win)
                 {
@@ -100,12 +110,11 @@ namespace Gomoku.GameControl
                 }
 
                 // Redraw the board after each move
-                board.GetBoardState();
-                render.Board(board.Field);
+                _board.GetBoardState();
+                _render.Board(status);
             }
 
 
-            #region Methods
             // Reads and validates a player's name from the console
             // Ensures that the name is not empty or whitespace
             string GetPlayerName(string prompt)
@@ -129,7 +138,7 @@ namespace Gomoku.GameControl
             }
 
             // Reads and validates the selected stone color
-            // Returns a StoneColor enum value
+            // Return a StoneColor enum value
             StoneColor GetStone(string prompt)
             {
                 int black = 1;
@@ -170,9 +179,9 @@ namespace Gomoku.GameControl
             }
 
             // Ensures that two players do not use the same stone color
-            bool CheckStoneColor(StoneColor stoneBlack, StoneColor stoneWhite)
+            bool CheckStoneColor(StoneColor blackStone, StoneColor whiteStone)
             {
-                if (stoneBlack == StoneColor.Black && stoneWhite == StoneColor.Black || stoneBlack == StoneColor.White && stoneWhite == StoneColor.White)
+                if (blackStone == StoneColor.Black && whiteStone == StoneColor.Black || blackStone == StoneColor.White && whiteStone == StoneColor.White)
                 {
                     return false;
                 }
@@ -185,7 +194,7 @@ namespace Gomoku.GameControl
             {
                 var cellState = player.Stone == StoneColor.Black ? CellState.Black : CellState.White;
 
-                board.PlaceSymbol(position.X, position.Y, cellState);
+                _board.PlaceSymbol(position.X, position.Y, cellState);
             }           
             #endregion
         }
