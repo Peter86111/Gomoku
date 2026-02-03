@@ -20,6 +20,11 @@ The main goal of this project is learning and practicing:
 
 ---
 
+## Key Architectural Features
+- **Inversion of Control (IoC) & Dependency Injection (DI)**: The project follows modern SOLID principles. The `Game` engine is decoupled from its dependencies (Board, Renderer, WinCondition) using constructor injection and interfaces, making the codebase highly testable and maintainable.
+
+---
+
 ## Current State
 
 🚧 **This project is under active development.**
