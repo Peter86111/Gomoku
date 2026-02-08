@@ -73,7 +73,7 @@ namespace Gomoku.GameControl
                 var input = new ConsoleInput();
 
                 // Read move coordinates from the player
-                var moveX = input.ReadInt("\nX (0–14): ");
+                var moveX = input.ReadString("\nX (A–O): ");
                 var moveY = input.ReadInt("Y (0–14): ");
 
                 // Validate that the selected position is empty
@@ -83,7 +83,7 @@ namespace Gomoku.GameControl
                     Console.WriteLine("\nThis field is occupied. Try again.\n");
                     Console.ResetColor();
 
-                    moveX = input.ReadInt("X (0–14): ");
+                    moveX = input.ReadString("X (A–O): ");
                     moveY = input.ReadInt("Y (0–14): ");
                 }
 

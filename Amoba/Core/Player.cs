@@ -30,7 +30,10 @@ namespace Gomoku.Core
                     throw new AggregateException("Player name cannot be empty or whitespace.");
                 }
 
-                _name = value;
+                else
+                {
+                    _name = value;
+                }
             }
         }
 

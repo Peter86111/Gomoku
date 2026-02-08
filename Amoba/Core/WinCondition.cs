@@ -9,7 +9,6 @@ namespace Gomoku.Core
 {
     internal class WinCondition: IWinCodition
     {
-        #region Methods        
         // Check for horizontal winning lines from the last player's position
         public bool CheckWinHorizontally(CellState[,] field, int lastX, int lastY)
         {
@@ -197,6 +196,5 @@ namespace Gomoku.Core
 
             return false;
         }
-        #endregion
     }
 }

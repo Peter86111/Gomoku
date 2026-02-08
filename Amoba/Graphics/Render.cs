@@ -30,9 +30,9 @@ namespace Gomoku.Graphics
 
             Console.WriteLine();
 
-            // Horizontal axis (X-axis) numbering
-            // Represents column indices from 0 to 14
-            string axisX = "      0  1  2  3  4  5  6  7  8  9  10 11 12 13 14\n";  // x: column index (horizontal axis)
+            // Horizontal axis (X-axis) charachters
+            // Represents column indices from A to O
+            string axisX = "      A  B  C  D  E  F  G  H  I  J  K  L  M  N  O\n";  // x: column index (horizontal axis)
 
             // Print X-axis centered horizontally
             foreach (string line in axisX.Split('\n'))

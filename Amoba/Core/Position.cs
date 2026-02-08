@@ -25,7 +25,10 @@ namespace Gomoku.Core
                     throw new ArgumentException("Invalid input! Try again between 0 and 14.");
                 }
 
-                _x = value;
+                else
+                {
+                    _x = value;
+                }
             }
         }
 
@@ -40,7 +43,10 @@ namespace Gomoku.Core
                     throw new ArgumentException("Invalid input! Try again between 0 and 14.");
                 }
 
-                _y = value;
+                else
+                {
+                    _y = value;
+                }
             }
         }
         #endregion
