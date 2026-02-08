@@ -27,12 +27,11 @@ The main goal of this project is learning and practicing:
 
 ## Current State
 
-🚧 **This project is under active development.**
+**This project is under active development.**
 
 Planned improvements:
 - Menu system
 - Improved text and input alignment
-- Letter-based X-axis (A–O instead of numbers)
 - Code refactoring and documentation expansion
 - Possible AI opponent (future goal)
 
