@@ -15,8 +15,6 @@ The main goal of this project is learning and practicing:
 - Two-player local gameplay
 - Unicode-based board rendering
 - Centered ASCII title screen
-- Win condition checks (horizontal, vertical, diagonal)
-- Clear separation of responsibilities (Game, Board, Render, Input)
 
 ---
 
