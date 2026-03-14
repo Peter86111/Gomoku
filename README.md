@@ -28,8 +28,6 @@ The main goal of this project is learning and practicing:
 **This project is under active development.**
 
 Planned improvements:
-- Menu system
-- Improved text and input alignment
 - Code refactoring and documentation expansion
 - Possible AI opponent (future goal)
 
