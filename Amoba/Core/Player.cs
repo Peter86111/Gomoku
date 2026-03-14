@@ -27,7 +27,7 @@ namespace Gomoku.Core
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new AggregateException("Player name cannot be empty or whitespace.");
+                    throw new ArgumentException("Player name cannot be empty or whitespace.");
                 }
 
                 else

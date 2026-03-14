@@ -10,22 +10,17 @@ namespace Gomoku.Input
     {
         public int ReadString(string prompt)
         {
-            while (true)
+            Console.Write(prompt);
+            string line = Console.ReadLine().ToUpper();
+
+            if (line.Length == 1 && line[0] >= 'A' && line[0] <= 'O')
             {
-                Console.Write(prompt);
-                string line = Console.ReadLine().ToUpper();
+                return line[0] - 'A';
+            }
 
-                if (line.Length == 1 && line[0] >= 'A' && line[0] <= 'O')
-                {
-                    return line[0] - 'A';
-                }
-
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid input! Try again between 'A' and 'O'.");
-                    Console.ResetColor();
-                }
+            else
+            {
+                return -1;
             }
         }
 
@@ -34,23 +29,37 @@ namespace Gomoku.Input
             const int min = 0;
             const int max = 14;
 
-            while (true)
+            Console.Write(prompt);
+            string line = Console.ReadLine();
+
+            if (int.TryParse(line, out int number) && number >= min && number <= max)
             {
-                Console.Write(prompt);
-                string line = Console.ReadLine();
-
-                if (int.TryParse(line, out int number) && number >= min && number <= max)
-                {
-                    return number;
-                }
-
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid input! Try again between 0 and 14.");
-                    Console.ResetColor();
-                }
+                return number;
             }
-        }        
+
+            else
+            {
+                return -1;
+            }
+        }
+        
+        public int ReadIntForMenu(string prompt)
+        {
+            const int min = 1;
+            const int max = 3;
+
+            Console.Write(prompt);
+            string line = Console.ReadLine();
+
+            if (int.TryParse(line, out int number) && number >= min && number <= max)
+            {
+                return number;
+            }
+
+            else
+            {
+                return -1;
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Gomoku.Core;
+using Gomoku.Menu;
 
 namespace Gomoku.Interface
 {
@@ -11,5 +12,8 @@ namespace Gomoku.Interface
     {
         void Board(CellState[,] cellState);
         void GetTitle();
+        void GetMenu();
+        void GetRuleInfo(GameInfo gameInfo);
+        string CenterText(string prompt);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Gomoku.Core;
 using Gomoku.Interface;
+using Gomoku.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,7 @@ using System.Threading.Tasks;
 namespace Gomoku.Graphics
 {
     internal class Render: IRender
-    {
-        #region Methods
+    {        
         public void Board(CellState[,] cellStates)
         {
             // Enable UTF-8 encoding to properly display box-drawing and Unicode characters
@@ -21,8 +21,8 @@ namespace Gomoku.Graphics
             int consoleWidth = Console.WindowWidth;
 
             // Logical width of the board (used for centering)
-            int columnWidth = 60;
-            int rowWidth = 60;
+            int columnWidth = 55;
+            int rowWidth = 55;
 
             // Horizontal and vertical padding to center the board
             int paddingX = (consoleWidth - columnWidth) / 2;
@@ -32,7 +32,7 @@ namespace Gomoku.Graphics
 
             // Horizontal axis (X-axis) charachters
             // Represents column indices from A to O
-            string axisX = "      A  B  C  D  E  F  G  H  I  J  K  L  M  N  O\n";  // x: column index (horizontal axis)
+            string axisX = "      A  B  C  D  E  F  G  H  I  J  K  L  M  N  O\n";
 
             // Print X-axis centered horizontally
             foreach (string line in axisX.Split('\n'))
@@ -88,16 +88,11 @@ namespace Gomoku.Graphics
             Console.ResetColor();
         }
 
+        // Center the logo
         public void GetTitle()
         {
             // Get console width to calculate horizontal centering
-            int consoleWidth = Console.WindowWidth;
-
-            // Fixed width of the ASCII logo
-            int logoWidth = 85;
-
-            // Calculate padding to center the logo
-            int padding = (consoleWidth - logoWidth) / 2;
+            int consoleWidth = Console.WindowWidth;            
 
             // ASCII art title for the game
             string gomokuLogo = @"
@@ -124,17 +119,82 @@ namespace Gomoku.Graphics
             // Print the logo line by line with horizontal centering
             foreach (string line in gomokuLogo.Split('\n'))
             {
-                Console.WriteLine(new string(' ', padding) + line);
+                var clearLine = line.Trim();
+
+                // Fixed width of the ASCII logo
+                int logoWidth = clearLine.Length;
+
+                // Calculate padding to center the logo
+                int padding = (consoleWidth - logoWidth) / 2;
+
+                Console.WriteLine(new string(' ', padding) + clearLine);
+            }            
+        }  
+        
+        // Center the menu
+        public void GetMenu()
+        {
+            // Get console width to calculate horizontal centering
+            int consoleWidth = Console.WindowWidth;            
+
+            // Display start menu
+            string menu = "(1) Run game (2) Game rule (3) Exit";
+
+            foreach (string line in menu.Split('\n'))
+            {
+                var cleanLine = line.Trim();
+                // Fixed width of the menu
+                int menuWordWidth = cleanLine.Length;
+
+                // Calculate padding to center the menu
+                int padding = (consoleWidth - menuWordWidth) / 2;
+
+                Console.WriteLine(new string(' ', padding) + cleanLine);
+            }
+        }
+
+        // Center the game rule
+        public void GetRuleInfo(GameInfo gameInfo)
+        {
+            var word = gameInfo.GameRuleInfo().Split('\n');
+
+            // Get console width to calculate horizontal centering
+            int consoleWidth = Console.WindowWidth;
+
+            foreach (string line in word)
+            {
+                var cleanLine = line.Trim();               
+
+                // Fixed width of the word
+                int ruleWidth = cleanLine.Length;
+
+                // Calculate padding to center the word
+                int padding = (consoleWidth - ruleWidth) / 2;
+
+                Console.WriteLine(new string(' ', padding) + cleanLine);
+            }
+        }
+
+        // Center the text 
+        public string CenterText(string prompt)
+        {
+            // Get console width to calculate horizontal centering
+            int consoleWidth = Console.WindowWidth;
+
+            // Fixed width of the word
+            int promptWidth = prompt.Length;
+
+            // Calculate padding to center the word
+            int padding = (consoleWidth - promptWidth) / 2;
+
+            if (padding < 0)
+            {
+                padding = 0;
             }
 
             Console.WriteLine();
 
-            // Display start message
-            Console.WriteLine(new string(' ', padding) + "\t\t   Press any key to start...");
-
-            // Wait for user input before continuing
-            Console.ReadKey();
+            return new string(' ', padding) + prompt;
         }
-        #endregion
     }
 }

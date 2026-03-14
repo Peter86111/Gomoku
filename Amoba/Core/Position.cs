@@ -22,7 +22,7 @@ namespace Gomoku.Core
             {
                 if ((value < 0) || (value > 14))
                 {
-                    throw new ArgumentException("Invalid input! Try again between 0 and 14.");
+                    throw new Exception("Invalid input! Try again between 0 and 14.");
                 }
 
                 else
@@ -40,7 +40,7 @@ namespace Gomoku.Core
             {
                 if ((value < 0) || (value > 14))
                 {
-                    throw new ArgumentException("Invalid input! Try again between 0 and 14.");
+                    throw new Exception("Invalid input! Try again between 0 and 14.");
                 }
 
                 else
