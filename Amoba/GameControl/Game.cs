@@ -146,7 +146,6 @@ namespace Gomoku.GameControl
 
                 if (string.IsNullOrWhiteSpace(line))
                 {
-                    Console.Write(prompt);
                     line = Console.ReadLine();
                 }
 
