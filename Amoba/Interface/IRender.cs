@@ -12,8 +12,9 @@ namespace Gomoku.Interface
     {
         void Board(CellState[,] cellState);
         void GetTitle();
-        void GetMenu();
-        void GetRuleInfo(GameInfo gameInfo);
+        void CenterMenuText();
+        void CenterRuleInfoText(GameInfo gameInfo);
         string CenterText(string prompt);
+        string CenterWarningText(string prompt);
     }
 }

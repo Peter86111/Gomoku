@@ -33,7 +33,7 @@ namespace Gomoku
                 render.GetTitle();
 
                 // Menu
-                render.GetMenu();
+                render.CenterMenuText();
 
                 var numberOfMenu = input.ReadIntForMenu(render.CenterText("Select an option: "));                
 

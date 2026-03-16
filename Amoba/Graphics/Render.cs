@@ -3,6 +3,7 @@ using Gomoku.Interface;
 using Gomoku.Menu;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -88,7 +89,6 @@ namespace Gomoku.Graphics
             Console.ResetColor();
         }
 
-        // Center the logo
         public void GetTitle()
         {
             // Get console width to calculate horizontal centering
@@ -131,8 +131,7 @@ namespace Gomoku.Graphics
             }            
         }  
         
-        // Center the menu
-        public void GetMenu()
+        public void CenterMenuText()
         {
             // Get console width to calculate horizontal centering
             int consoleWidth = Console.WindowWidth;            
@@ -153,8 +152,7 @@ namespace Gomoku.Graphics
             }
         }
 
-        // Center the game rule
-        public void GetRuleInfo(GameInfo gameInfo)
+        public void CenterRuleInfoText(GameInfo gameInfo)
         {
             var word = gameInfo.GameRuleInfo().Split('\n');
 
@@ -174,8 +172,7 @@ namespace Gomoku.Graphics
                 Console.WriteLine(new string(' ', padding) + cleanLine);
             }
         }
-
-        // Center the text 
+        
         public string CenterText(string prompt)
         {
             // Get console width to calculate horizontal centering
@@ -195,6 +192,27 @@ namespace Gomoku.Graphics
             Console.WriteLine();
 
             return new string(' ', padding) + prompt;
+        }
+        
+        public string CenterWarningText(string prompt)
+        {
+            // Get console width to calculate horizontal centering
+            int consoleWidth = Console.WindowWidth;
+
+            // Fixed width of the word
+            int promptWidth = prompt.Length;
+
+            // Calculate padding to center the word
+            int padding = (consoleWidth - promptWidth) / 2;
+
+            if (padding < 0)
+            {
+                padding = 0;
+            }
+
+            Console.WriteLine();
+
+            return new string(' ', padding) + "\x1b[91m" + prompt + "\x1b[0m";  // Use ASCII code for red color
         }
     }
 }

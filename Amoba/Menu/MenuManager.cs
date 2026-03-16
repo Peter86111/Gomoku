@@ -37,7 +37,7 @@ namespace Gomoku.Menu
 
                 case 2:
                     Console.Clear();
-                    _render.GetRuleInfo(_gameInfo);
+                    _render.CenterRuleInfoText(_gameInfo);
                     break;
 
                 case 3:

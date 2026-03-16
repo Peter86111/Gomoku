@@ -78,26 +78,20 @@ namespace Gomoku.GameControl
 
                     if (moveX < 0 || moveX > 14)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine(_render.CenterText("Invalid input! Try again between 'A' and 'O'."));
-                        Console.ResetColor();
+                        Console.WriteLine(_render.CenterWarningText("Invalid input! Try again between 'A' and 'O'."));
                         Console.ReadKey(true);
                     }
 
                     else if (moveY < 0 || moveY > 14)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine(_render.CenterText("Invalid input! Try again between 0 and 14."));
-                        Console.ResetColor();
+                        Console.WriteLine(_render.CenterWarningText("Invalid input! Try again between 0 and 14."));
                         Console.ReadKey(true);
                     }
 
                     // Validate that the selected position is empty
                     else if (!_board.IsValidMove(moveX, moveY))
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine(_render.CenterText("This field is occupied. Try again."));
-                        Console.ResetColor();
+                        Console.WriteLine(_render.CenterWarningText("This field is occupied. Try again."));
                         Console.ReadKey(true);
                     }
 
