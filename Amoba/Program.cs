@@ -39,10 +39,8 @@ namespace Gomoku
 
                 if (numberOfMenu < 1 || numberOfMenu > 3)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(render.CenterText("Invalid input! Try again between 1 and 3."));
-                    Console.ResetColor();
-                    Console.ReadKey();
+                    Console.WriteLine(render.CenterWarningText("Invalid input! Try again between 1 and 3."));
+                    Console.ReadKey(true);
                 }
 
                 else
