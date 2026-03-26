@@ -33,13 +33,15 @@ namespace Gomoku
                 render.GetTitle();
 
                 // Menu
-                render.CenterMenuText();
+                render.GetMenu();
 
                 var numberOfMenu = input.ReadIntForMenu(render.CenterText("Select an option: "));                
 
                 if (numberOfMenu < 1 || numberOfMenu > 3)
                 {
                     Console.WriteLine(render.CenterWarningText("Invalid input! Try again between 1 and 3."));
+
+                    // Wait for user input before continuing
                     Console.ReadKey(true);
                 }
 
@@ -49,9 +51,7 @@ namespace Gomoku
 
                     if (choise == 2)
                     {
-                        Console.WriteLine(render.CenterText("Press any key to continue..."));
-
-                        // Wait for user input before continuing
+                        Console.WriteLine(render.CenterText("Press any key to continue..."));                        
                         Console.ReadKey(true);
                     }
 

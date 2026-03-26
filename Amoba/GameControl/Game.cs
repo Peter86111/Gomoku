@@ -118,7 +118,7 @@ namespace Gomoku.GameControl
                 {
                     // End the game and announce the winner
                     isGameOver = true;
-                    Console.WriteLine(_render.CenterText($"Winner: {currentPlayer.Name} - [{currentPlayer.Stone} stone]!"));
+                    Console.WriteLine(_render.CenterWinnerText($"Winner: {currentPlayer.Name} - [{currentPlayer.Stone} stone]!"));
                 }
 
                 else
