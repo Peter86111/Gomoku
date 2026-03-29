@@ -44,7 +44,7 @@ Some parts may be improved later as my knowledge grows.
 
 This project was developed as part of a self-learning journey in C# and software development.
 
-During development, I received guidance and conceptual explanations from ChatGPT (OpenAI),
+During development, I received guidance and conceptual explanations from ChatGPT (OpenAI) and Gemini,
 which helped me better understand design decisions, code structure, and best practices.
 
 All code was written, tested, and integrated by me as part of the learning process.
