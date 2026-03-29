@@ -15,7 +15,6 @@ namespace Gomoku
         {
             IRender render = new Render();
             ConsoleInput input = new ConsoleInput();
-
             MenuManager menuManager = new MenuManager();           
 
             bool isRunning = true;

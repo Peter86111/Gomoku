@@ -127,7 +127,7 @@ namespace Gomoku.GameControl
                 else if (_board.IsBoardFull(counter))
                 {
                     isGameOver = true;
-                    Console.WriteLine(_render.CenterWinnerText("The game is draw!"));
+                    Console.WriteLine(_render.CenterWinnerText("The game ended in a draw!"));
                 }
 
                 else
