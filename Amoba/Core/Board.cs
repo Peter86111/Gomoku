@@ -54,6 +54,18 @@ namespace Gomoku.Core
 
             return false;
         }
+
+        public bool IsBoardFull(int counter)
+        {
+            int boardSize = _size * _size;
+
+            if (counter == boardSize)
+            {
+                return true;
+            }
+
+            return false;
+        }
         #endregion
     }
 }

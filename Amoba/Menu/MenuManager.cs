@@ -1,4 +1,6 @@
-﻿using Gomoku.GameControl;
+﻿using Gomoku.Core;
+using Gomoku.GameControl;
+using Gomoku.Graphics;
 using Gomoku.Input;
 using Gomoku.Interface;
 using System;
@@ -11,33 +13,25 @@ namespace Gomoku.Menu
 {
     internal class MenuManager
     {
-        #region Fields
-        private readonly Game _game;
-        private readonly GameInfo _gameInfo;
-        private readonly IRender _render;
-        #endregion
-
-        #region Constructor
-        public MenuManager(Game game, GameInfo gameInfo, IRender render)
-        {
-            _game = game;
-            _gameInfo = gameInfo;
-            _render = render;
-        }
-        #endregion
+        IRender render = new Render();
+        GameInfo gameInfo = new GameInfo();     
 
         public int Menu(int number)
         {
             switch (number)
             {
                 case 1:
-                    _game.Run();
+                    IBoard board = new Board();                    
+                    IWinCodition winCodition = new WinCondition();
+
+                    var game = new Game(board, render, winCodition);
+                    game.Run();
                     Console.ReadKey(true);
                     break;
 
                 case 2:
                     Console.Clear();
-                    _render.CenterRuleInfoText(_gameInfo);
+                    render.CenterRuleInfoText(gameInfo);
                     break;
 
                 case 3:

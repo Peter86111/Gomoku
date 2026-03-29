@@ -12,5 +12,6 @@ namespace Gomoku.Interface
         CellState[,] GetBoardState();
         void PlaceSymbol(int x, int y, CellState playerSymbol);
         bool IsValidMove(int x, int y);
+        public bool IsBoardFull(int counter);
     }
 }

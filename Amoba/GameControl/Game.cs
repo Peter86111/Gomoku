@@ -53,7 +53,10 @@ namespace Gomoku.GameControl
             // According to Gomoku rules, the black stone always starts
             Player currentPlayer = DetermineStartingPlayer(player1, player2);
 
-            var input = new ConsoleInput();            
+            var input = new ConsoleInput();
+
+            // For stone step
+            int counter = 0;
 
             // Main game loop
             while (!isGameOver)
@@ -102,17 +105,17 @@ namespace Gomoku.GameControl
                 }
 
                 Console.Clear();
-
+                
                 // Place the stone on the board
                 var position = new Position(moveX, moveY);
                 MakeMove(currentPlayer, position);
 
                 // Redraw the board after each move
                 status = _board.GetBoardState();
-                _render.Board(status);
+                _render.Board(status);                
 
                 // Check all possible win conditions from the last move
-                bool win = _winCondition.CheckWinHorizontally(status, moveX, moveY) || _winCondition.CheckWinVertically(status, moveX, moveY) || _winCondition.CheckWinMainDiagonally(status, moveX, moveY) || _winCondition.CheckWinAntiDiagonally(status, moveX, moveY);
+                bool win = _winCondition.CheckWinHorizontally(status, moveX, moveY) || _winCondition.CheckWinVertically(status, moveX, moveY) || _winCondition.CheckWinMainDiagonally(status, moveX, moveY) || _winCondition.CheckWinAntiDiagonally(status, moveX, moveY);                
 
                 if (win)
                 {
@@ -121,8 +124,16 @@ namespace Gomoku.GameControl
                     Console.WriteLine(_render.CenterWinnerText($"Winner: {currentPlayer.Name} - [{currentPlayer.Stone} stone]!"));
                 }
 
+                else if (_board.IsBoardFull(counter))
+                {
+                    isGameOver = true;
+                    Console.WriteLine(_render.CenterWinnerText("The game is draw!"));
+                }
+
                 else
                 {
+                    counter++;
+
                     // Switch to the other player
                     currentPlayer = currentPlayer == player1 ? player2 : player1;
                 }
